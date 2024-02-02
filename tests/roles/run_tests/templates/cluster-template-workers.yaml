@@ -1,37 +1,3 @@
-apiVersion: cluster.x-k8s.io/{{ CAPI_VERSION }}
-kind: MachineDeployment
-metadata:
-  name: ${ CLUSTER_NAME }
-  namespace: ${ NAMESPACE }
-  labels:
-    cluster.x-k8s.io/cluster-name: ${ CLUSTER_NAME }
-    nodepool: nodepool-0
-spec:
-  clusterName: ${ CLUSTER_NAME }
-  replicas: ${ WORKER_MACHINE_COUNT }
-  selector:
-    matchLabels:
-      cluster.x-k8s.io/cluster-name: ${ CLUSTER_NAME }
-      nodepool: nodepool-0
-  template:
-    metadata:
-      labels:
-        cluster.x-k8s.io/cluster-name: ${ CLUSTER_NAME }
-        nodepool: nodepool-0
-    spec:
-      clusterName: ${ CLUSTER_NAME }
-      version: ${ KUBERNETES_VERSION }
-      bootstrap:
-        configRef:
-          name: ${ CLUSTER_NAME }-workers
-          apiVersion: bootstrap.cluster.x-k8s.io/{{ CAPI_VERSION }}
-          kind: KubeadmConfigTemplate
-      infrastructureRef:
-        name: ${ CLUSTER_NAME }-workers
-        apiVersion: infrastructure.cluster.x-k8s.io/{{ CAPM3_VERSION }}
-        kind: Metal3MachineTemplate
-      nodeDrainTimeout: ${ NODE_DRAIN_TIMEOUT }
----
 apiVersion: infrastructure.cluster.x-k8s.io/{{ CAPM3_VERSION }}
 kind: Metal3MachineTemplate
 metadata:
